@@ -37,7 +37,7 @@ class Server {
 
     public routes(): void {
         this.app.use('/api/auth', AuthenticationRouter)
-        this.app.use('/api/assignements', AssignementsRouter)
+        this.app.use('/api/assignments', AssignementsRouter)
     }
 }
 
