@@ -21,7 +21,7 @@ class Auth {
 
         if (!token) {
             return next(
-                new ErrorResponse("Not authorized to access this route", 401)
+                new ErrorResponse("Non autorisé à accéder à cette route", 401)
             )
         }
 
@@ -47,7 +47,7 @@ class Auth {
             if (!roles.includes(req.user.role)) {
                 return next(
                     new ErrorResponse(
-                        `User role ${req.user.role} has no access to this route`,
+                        `Le rôle utilisateur ${req.user.role} n'a pas accès à cette route`,
                         403
                     )
                 )

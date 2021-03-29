@@ -21,10 +21,10 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      minlength: [2, "Please use at least 2 characters"],
+      minlength: [2, "Veuillez utiliser au moins 2 caractères"],
       maxlength: [
         50,
-        "The maximum number of characters allowed is 50 characters",
+        "Le nombre maximum de caractères autorisé est de 50 caractères",
       ],
     },
     password: {
@@ -32,7 +32,7 @@ const UserSchema = new Schema(
       required: true,
       select: false,
       trim: true,
-      minlength: [6, "Please use at least 6 characters"],
+      minlength: [6, "Veuillez utiliser au moins 6 caractères"],
     },
     role: {
       type: String,
