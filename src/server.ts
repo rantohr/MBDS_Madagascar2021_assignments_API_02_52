@@ -6,7 +6,7 @@ import * as path from 'path'
 
 import config from "./environments";
 import AuthenticationRouter from './routes/authentication';
-import AssignementsRouter from './routes/assignments';
+import AssignmentsRouter from './routes/assignments';
 
 // Server class
 class Server {
@@ -37,7 +37,7 @@ class Server {
 
     public routes(): void {
         this.app.use('/api/auth', AuthenticationRouter)
-        this.app.use('/api/assignments', AssignementsRouter)
+        this.app.use('/api/assignments', AssignmentsRouter)
     }
 }
 

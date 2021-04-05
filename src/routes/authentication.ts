@@ -102,18 +102,6 @@ class AuthenticationRouter {
                 this.sendTokenResponse(user, 200, res);
             }
         )
-
-        this.router.get(
-            '/newAccessToken',
-            async (req: Request, res: Response, next: NextFunction) => {
-                const user = (req as any).user;
-                const accessToken = user.generateAccessToken(59);
-                res.status(200).json({
-                    success: true,
-                    accessToken
-                });
-            }
-        )
     }
 
     /**
