@@ -21,10 +21,10 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      minlength: [2, "Veuillez utiliser au moins 2 caractères"],
+      minlength: [2, "Nom invalide! Veuillez utiliser au moins 2 caractères"],
       maxlength: [
         50,
-        "Le nombre maximum de caractères autorisé est de 50 caractères",
+        "Nom invalide! Le nombre maximum de caractères autorisé est de 50 caractères",
       ],
     },
     password: {
@@ -32,7 +32,7 @@ const UserSchema = new Schema(
       required: true,
       select: false,
       trim: true,
-      minlength: [6, "Veuillez utiliser au moins 6 caractères"],
+      minlength: [6, "Mot de passe invalide! Veuillez utiliser au moins 6 caractères"],
     },
     role: {
       type: String,
@@ -46,7 +46,7 @@ const UserSchema = new Schema(
       trim: true,
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Invalid email",
+        "Email invalide!",
       ],
     },
     createdAt: {

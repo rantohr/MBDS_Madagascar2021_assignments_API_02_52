@@ -38,6 +38,7 @@ class AssignmentsRouter {
 
     this.router.get(
       '/',
+      auth.protect,
       async (req: Request, res: Response, next: NextFunction) => {
 
         const aggregateQuery = Assignment.aggregate();
@@ -60,6 +61,7 @@ class AssignmentsRouter {
 
     this.router.get(
       '/:_id',
+      auth.protect,
       this.getAssignment,
       async (req: Request, res: any, next: NextFunction) => {
         res.json(res.assignment);

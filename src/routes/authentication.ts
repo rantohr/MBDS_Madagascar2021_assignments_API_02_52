@@ -38,12 +38,15 @@ class AuthenticationRouter {
                     name,
                     email,
                     password,
+                }).then(data => {
+                    res.status(200).json({
+                        success: true,
+                        message: "Votre compte a été créé avec succès"
+                    })
+                }).catch(err => {
+                    console.log(err)
+                    res.status(500).send(err)
                 });
-
-                res.status(200).json({
-                    success: true,
-                    message: "Votre compte a été créé avec succès"
-                })
             }
         )
 
@@ -61,13 +64,15 @@ class AuthenticationRouter {
                 // check for user
                 const user: any = await users.findOne({ email }).select("+password");
                 if (!user) {
-                    return next(new ErrorResponse("Adresse email ou mot de passe invalide", 401));
+                    res.status(500).send("Adresse email ou mot de passe invalide");
+                    return;
                 }
 
                 // match password
                 const isMatch = await user.matchPassword(password);
                 if (!isMatch) {
-                    return next(new ErrorResponse("Adresse email ou mot de passe invalide", 401));
+                    res.status(500).send("Adresse email ou mot de passe invalide");
+                    return;
                 }
 
                 this.sendTokenResponse(user, 200, res);
