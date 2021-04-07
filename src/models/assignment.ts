@@ -16,7 +16,12 @@ const AssignmentSchema = new Schema({
     rendu: {
         type: Boolean,
         default: false
-    }
+    },
+    matiere: {
+        type: Schema.Types.ObjectId,
+        ref: "Subject",
+        required: false
+    },
 }, { _id: true });
 
 AssignmentSchema.plugin(aggregatePaginate);

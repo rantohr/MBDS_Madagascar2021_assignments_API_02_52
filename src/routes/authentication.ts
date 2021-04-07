@@ -64,15 +64,13 @@ class AuthenticationRouter {
                 // check for user
                 const user: any = await users.findOne({ email }).select("+password");
                 if (!user) {
-                    res.status(500).send("Adresse email ou mot de passe invalide");
-                    return;
+                    return res.status(500).send("Adresse email ou mot de passe invalide");
                 }
 
                 // match password
                 const isMatch = await user.matchPassword(password);
                 if (!isMatch) {
-                    res.status(500).send("Adresse email ou mot de passe invalide");
-                    return;
+                    return res.status(500).send("Adresse email ou mot de passe invalide");
                 }
 
                 this.sendTokenResponse(user, 200, res);

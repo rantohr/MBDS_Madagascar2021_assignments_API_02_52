@@ -36,8 +36,8 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      default: "user",
-      enum: ["admin", "user"],
+      default: "etudiant",
+      enum: ["prof", "etudiant"],
     },
     email: {
       type: String,
@@ -48,6 +48,11 @@ const UserSchema = new Schema(
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         "Email invalide!",
       ],
+    },
+    image: {
+      type: String,
+      required: false,
+      trim: true
     },
     createdAt: {
       type: Date,
@@ -116,4 +121,4 @@ UserSchema.methods.matchPassword = async function (enteredPassword) {
   return bcrypt.compare(enteredPassword, (this as any).password);
 };
 
-export default mongoose.model("user", UserSchema);
+export default mongoose.model("User", UserSchema);
