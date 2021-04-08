@@ -16,7 +16,7 @@ class AssignmentsRouter {
     this.router.post(
       '/',
       auth.protect,
-      auth.authorize("admin"),
+      auth.authorize("prof"),
       async (req: Request, res: Response, next: NextFunction) => {
 
         const assignment = new Assignment({
@@ -71,7 +71,7 @@ class AssignmentsRouter {
     this.router.put(
       '/:_id',
       auth.protect,
-      auth.authorize("admin"),
+      auth.authorize("prof"),
       this.getAssignment,
       async (req: Request, res: any, next: NextFunction) => {
 
@@ -90,7 +90,7 @@ class AssignmentsRouter {
     this.router.delete(
       '/:_id',
       auth.protect,
-      auth.authorize("admin"),
+      auth.authorize("prof"),
       this.getAssignment,
       async (req: Request, res: any, next: NextFunction) => {
         try {
