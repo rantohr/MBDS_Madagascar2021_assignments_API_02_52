@@ -22,6 +22,19 @@ const AssignmentSchema = new Schema({
         ref: "Subject",
         required: false
     },
+    auteur: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: false
+    },
+    note: {
+        type: Number,
+        required: false
+    },
+    remarques: {
+        type: String,
+        required: false
+    }
 }, { _id: true });
 
 AssignmentSchema.plugin(aggregatePaginate);

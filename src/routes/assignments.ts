@@ -24,6 +24,10 @@ class AssignmentsRouter {
           nom: req.body.nom,
           dateDeRendu: req.body.dateDeRendu,
           rendu: req.body.rendu,
+          matiere: req.body.matiere,
+          auteur: req.body.auteur,
+          note: req.body.note,
+          remarques: req.body.remarques
         });
         console.log("POST assignment reçu :");
         console.log(assignment);
@@ -48,6 +52,12 @@ class AssignmentsRouter {
           {
             page: parseInt((req as any).query.page) || 1,
             limit: parseInt((req as any).query.limit) || 10,
+            $lookup: {
+              from: 'User',
+              localField: 'auteur',
+              foreignField: '_id',
+              as: 'auteur'
+            }
           },
           (err, assignments) => {
             if (err) {
