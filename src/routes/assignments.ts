@@ -67,7 +67,7 @@ class AssignmentsRouter {
         //   }
         // );
 
-        const assignments = await Assignment.find().populate({ path: 'matiere', model: Subject }).limit(3);
+        const assignments = await Assignment.find().populate({ path: 'matiere', model: Subject }).skip(1).limit(3);
         res.status(200).json(assignments)
       }
     )
