@@ -2,6 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { Router } from 'express';
 import { auth } from "../middleware/authorization";
 import Assignment from "../models/assignment";
+import Subject from "../models/subject";
 
 class AssignmentsRouter {
   router: Router;
@@ -42,30 +43,32 @@ class AssignmentsRouter {
 
     this.router.get(
       '/',
-      auth.protect,
       async (req: Request, res: Response, next: NextFunction) => {
 
-        const aggregateQuery = Assignment.aggregate();
+        // const aggregateQuery = Assignment.aggregate();
 
-        (Assignment as any).aggregatePaginate(
-          aggregateQuery,
-          {
-            page: parseInt((req as any).query.page) || 1,
-            limit: parseInt((req as any).query.limit) || 10,
-            $lookup: {
-              from: 'User',
-              localField: 'auteur',
-              foreignField: '_id',
-              as: 'auteur'
-            }
-          },
-          (err, assignments) => {
-            if (err) {
-              res.send(err);
-            }
-            res.send(assignments);
-          }
-        );
+        // (Assignment as any).aggregatePaginate(
+        //   aggregateQuery,
+        //   {
+        //     page: parseInt((req as any).query.page) || 1,
+        //     limit: parseInt((req as any).query.limit) || 10,
+        //     $lookup: {
+        //       from: 'User',
+        //       localField: 'auteur',
+        //       foreignField: '_id',
+        //       as: 'auteur'
+        //     }
+        //   },
+        //   (err, assignments) => {
+        //     if (err) {
+        //       res.send(err);
+        //     }
+        //     res.send(assignments);
+        //   }
+        // );
+
+        const assignments = await Assignment.find().populate({ path: 'matiere', model: Subject }).limit(3);
+        res.status(200).json(assignments)
       }
     )
 
