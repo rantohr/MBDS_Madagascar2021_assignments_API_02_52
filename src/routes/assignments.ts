@@ -45,30 +45,22 @@ class AssignmentsRouter {
       '/',
       async (req: Request, res: Response, next: NextFunction) => {
 
-        // const aggregateQuery = Assignment.aggregate();
+        (Assignment as any).paginate({}, {
+          page: parseInt((req as any).query.page) || 1,
+          limit: parseInt((req as any).query.limit) || 10,
+          populate: { path: 'matiere', model: Subject }
+        }).then(results => {
+          res.send(results);
+        }).catch(err => {
+          res.send(err);
+        })
 
-        // (Assignment as any).aggregatePaginate(
-        //   aggregateQuery,
-        //   {
-        //     page: parseInt((req as any).query.page) || 1,
-        //     limit: parseInt((req as any).query.limit) || 10,
-        //     $lookup: {
-        //       from: 'User',
-        //       localField: 'auteur',
-        //       foreignField: '_id',
-        //       as: 'auteur'
-        //     }
-        //   },
-        //   (err, assignments) => {
-        //     if (err) {
-        //       res.send(err);
-        //     }
-        //     res.send(assignments);
-        //   }
-        // );
-
-        const assignments = await Assignment.find().populate({ path: 'matiere', model: Subject }).skip(1).limit(3);
-        res.status(200).json(assignments)
+        // let start = 0;
+        // let limit = 10000;
+        // if(req.query.start) start = +req.query.start;
+        // if(req.query.limit) limit = +req.query.limit;
+        // const assignments = await Assignment.find().populate({ path: 'matiere', model: Subject }).skip(start).limit(limit);
+        // res.status(200).json(assignments)
       }
     )
 
