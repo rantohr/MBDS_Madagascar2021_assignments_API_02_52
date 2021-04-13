@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { auth } from "../middleware/authorization";
 import Assignment from "../models/assignment";
 import Subject from "../models/subject";
+import User from "../models/user";
 
 class AssignmentsRouter {
   router: Router;
@@ -48,7 +49,9 @@ class AssignmentsRouter {
         (Assignment as any).paginate({}, {
           page: parseInt((req as any).query.page) || 1,
           limit: parseInt((req as any).query.limit) || 10,
-          populate: { path: 'matiere', model: Subject }
+          populate: [
+            { path: 'matiere', model: Subject, populate: { path: 'teacher', model: User } }
+          , { path: 'auteur', model: User }]
         }).then(results => {
           res.send(results);
         }).catch(err => {
@@ -112,7 +115,14 @@ class AssignmentsRouter {
     let assignment;
     try {
       console.log('req.params._id', req.params._id)
-      assignment = await Assignment.findById(req.params._id);
+      assignment = await Assignment.findById(req.params._id).populate({
+        path: 'matiere',
+        model: 'Subject',
+        populate: {
+          path: 'teacher',
+          model: 'User'
+        }
+      }).populate('auteur');
       if (assignment == null) {
         return res.status(404).json({ message: "Cannot find Assignment" });
       }
