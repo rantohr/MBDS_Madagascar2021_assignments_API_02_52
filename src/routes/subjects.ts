@@ -14,7 +14,6 @@ class SubjectsRouter {
     routes() {
         this.router.get(
             '/',
-            auth.protect,
             async (req: Request, res: Response, next: NextFunction) => {
                 try {
                     const subjects = await Subject.find();
@@ -30,7 +29,6 @@ class SubjectsRouter {
 
         this.router.get(
             '/:_id',
-            auth.protect,
             this.getSubject,
             async (req: Request, res: any, next: NextFunction) => {
                 res.json(res.subject);
