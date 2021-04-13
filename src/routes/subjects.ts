@@ -2,6 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { Router } from 'express';
 import { auth } from "../middleware/authorization";
 import Subject from "../models/subject";
+import user from "../models/user";
 
 class SubjectsRouter {
     router: Router;
@@ -16,7 +17,7 @@ class SubjectsRouter {
             '/',
             async (req: Request, res: Response, next: NextFunction) => {
                 try {
-                    const subjects = await Subject.find();
+                    const subjects = await Subject.find().populate({ path: 'teacher', model: user });
                     if (!subjects) {
                         return res.status(404).json({ message: "No Subjects found" });
                     }
@@ -40,7 +41,7 @@ class SubjectsRouter {
         let subject;
         try {
             console.log('req.params._id', req.params._id)
-            subject = await Subject.findById(req.params._id);
+            subject = await Subject.findById(req.params._id).populate({ path: 'teacher', model: user });
             if (subject == null) {
                 return res.status(404).json({ message: "Cannot find Subject" });
             }
