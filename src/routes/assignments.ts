@@ -51,7 +51,7 @@ class AssignmentsRouter {
           limit: parseInt((req as any).query.limit) || 10,
           populate: [
             { path: 'matiere', model: Subject, populate: { path: 'teacher', model: User } }
-          , { path: 'auteur', model: User }]
+            , { path: 'auteur', model: User }]
         }).then(results => {
           res.send(results);
         }).catch(err => {
@@ -87,7 +87,7 @@ class AssignmentsRouter {
         console.log(req.body);
 
         try {
-          const updatedUser = await res.assignment.set(req.body);
+          const updatedUser = await Assignment.findOneAndUpdate({ _id: res.assignment._id }, req.body);
           res.json(updatedUser);
         } catch (err) {
           res.status(400).json({ message: err.message });
@@ -99,11 +99,10 @@ class AssignmentsRouter {
       '/:_id',
       auth.protect,
       auth.authorize("prof"),
-      this.getAssignment,
       async (req: Request, res: any, next: NextFunction) => {
         try {
-          await res.assignment.deleteOne();
-          res.json({ message: `${res.assignment.nom} deleted` });
+          await Assignment.findOneAndRemove({_id: req.params._id});
+          res.json({ message: `assignment supprimé` });
         } catch (err) {
           res.status(500).json({ message: err.message });
         }
