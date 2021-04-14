@@ -3,7 +3,7 @@ import * as multer from 'multer';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/tmp/');
+        cb(null, 'public/images/');
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
@@ -23,9 +23,12 @@ class UploadRouter {
     }
 
     routes() {
-        this.router.post('/', this.upload.single('file'), (req, res) => {
-            res.status(200).json({ success: true, body: req.body });
-        });
+        this.router.post(
+            '/',
+            this.upload.single('file'),
+            (req, res) => {
+                res.status(200).json({ success: true, body: req.body });
+            });
     }
 }
 

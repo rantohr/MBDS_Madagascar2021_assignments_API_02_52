@@ -66,9 +66,6 @@ const UserSchema = new Schema(
   { _id: true }
 );
 
-/**
- * crypt user password before save
- */
 UserSchema.pre<IUser>("save", async function (next) {
   if (!this.isModified("password")) {
     next();
@@ -77,11 +74,7 @@ UserSchema.pre<IUser>("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-/**
- * generate a jwt access token
- * @param expireTime token expire time in minutes
- * @returns string jwt signed access token
- */
+
 UserSchema.methods.generateAccessToken = function (expireTime = 15) {
   return jwt.sign(
     {
@@ -95,10 +88,7 @@ UserSchema.methods.generateAccessToken = function (expireTime = 15) {
   );
 };
 
-/**
- * generate a jwt refresh token
- * @returns string jwt signed refresh token
- */
+
 UserSchema.methods.generateRefreshToken = function () {
   const refreshSecret = `${config.REFRESH_TOKEN_SECRET}${(this as any).password}`;
   return jwt.sign(
@@ -113,10 +103,7 @@ UserSchema.methods.generateRefreshToken = function () {
   );
 };
 
-/**
- * match database password with user input
- * @returns boolean password matched
- */
+
 UserSchema.methods.matchPassword = async function (enteredPassword) {
   return bcrypt.compare(enteredPassword, (this as any).password);
 };

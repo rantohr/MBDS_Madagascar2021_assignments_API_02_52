@@ -4,6 +4,7 @@ import { auth } from "../middleware/authorization";
 import Assignment from "../models/assignment";
 import Subject from "../models/subject";
 import User from "../models/user";
+import * as faker from "faker";
 
 class AssignmentsRouter {
   router: Router;
@@ -44,26 +45,50 @@ class AssignmentsRouter {
 
     this.router.get(
       '/',
+      auth.protect,
       async (req: Request, res: Response, next: NextFunction) => {
 
-        (Assignment as any).paginate({}, {
+        let renduQuery: any = {};
+        if((req as any).query.rendu=='1') renduQuery.rendu = true;
+        if((req as any).query.rendu=='0') renduQuery.rendu = false;
+        (Assignment as any).paginate(renduQuery, {
           page: parseInt((req as any).query.page) || 1,
           limit: parseInt((req as any).query.limit) || 10,
           populate: [
-            { path: 'matiere', model: Subject, populate: { path: 'teacher', model: User } }
-            , { path: 'auteur', model: User }]
+            { path: 'matiere', model: Subject, populate: { path: 'teacher', model: User } }, { path: 'auteur', model: User }]
         }).then(results => {
           res.send(results);
         }).catch(err => {
           res.send(err);
         })
+      }
+    )
 
-        // let start = 0;
-        // let limit = 10000;
-        // if(req.query.start) start = +req.query.start;
-        // if(req.query.limit) limit = +req.query.limit;
-        // const assignments = await Assignment.find().populate({ path: 'matiere', model: Subject }).skip(start).limit(limit);
-        // res.status(200).json(assignments)
+    this.router.get(
+      '/data',
+      async (req: Request, res: Response, next: NextFunction) => {
+        let items = []
+        // STUDENTS
+        let students = await User.find({ role: 'etudiant' })
+
+        // ASSIGNMENTS
+        let subjectsIds = ['606d4d56d46cb401b45695e7', "606d4e28a795b11700e3cb8d", "606d4e56a795b11700e3cb8e", "606d4e89a795b11700e3cb8f", "606d4eada795b11700e3cb90"]
+        // for (let index = 0; index < 550; index++) {
+        //   let rendu = [true, false][Math.floor(Math.random() * 2)]
+          
+        //   let assignment = await Assignment.create({
+        //     dateDeRendu: faker.date.between('2021-03-01', '2021-06-01'),
+        //     nom: faker.lorem.word(),
+        //     rendu: rendu,
+        //     matiere: subjectsIds[Math.floor(Math.random() * subjectsIds.length)],
+        //     auteur: students[Math.floor(Math.random() * students.length)]._id,
+        //     note: rendu ? Math.floor(Math.random() * 20) : null,
+        //     remarques: faker.lorem.paragraph(),
+        //   })
+        //   console.log(`${index} - ${assignment._id}`)
+        // }
+
+        res.status(200).json('ok')
       }
     )
 
@@ -101,7 +126,7 @@ class AssignmentsRouter {
       auth.authorize("prof"),
       async (req: Request, res: any, next: NextFunction) => {
         try {
-          await Assignment.findOneAndRemove({_id: req.params._id});
+          await Assignment.findOneAndRemove({ _id: req.params._id });
           res.json({ message: `assignment supprimé` });
         } catch (err) {
           res.status(500).json({ message: err.message });
