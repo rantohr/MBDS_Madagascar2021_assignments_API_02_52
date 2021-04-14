@@ -29,7 +29,7 @@ const AssignmentSchema = new Schema({
     },
     note: {
         type: Number,
-        required: false
+        required: false,
     },
     remarques: {
         type: String,

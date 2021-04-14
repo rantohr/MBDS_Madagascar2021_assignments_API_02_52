@@ -75,7 +75,7 @@ UserSchema.pre<IUser>("save", async function (next) {
 });
 
 
-UserSchema.methods.generateAccessToken = function (expireTime = 15) {
+UserSchema.methods.generateAccessToken = function (expireTime = 10) {
   return jwt.sign(
     {
       _id: (this as any)._id,
@@ -83,7 +83,7 @@ UserSchema.methods.generateAccessToken = function (expireTime = 15) {
     },
     config.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: expireTime ? `${expireTime}m` : "15m",
+      expiresIn: expireTime ? `${expireTime}h` : "10h",
     }
   );
 };
@@ -98,7 +98,7 @@ UserSchema.methods.generateRefreshToken = function () {
     },
     refreshSecret,
     {
-      expiresIn: "1d",
+      expiresIn: "5d",
     }
   );
 };

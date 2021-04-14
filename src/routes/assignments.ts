@@ -49,8 +49,10 @@ class AssignmentsRouter {
       async (req: Request, res: Response, next: NextFunction) => {
 
         let renduQuery: any = {};
-        if((req as any).query.rendu=='1') renduQuery.rendu = true;
-        if((req as any).query.rendu=='0') renduQuery.rendu = false;
+        if ((req as any).query.rendu == '1') renduQuery.rendu = true;
+        if ((req as any).query.rendu == '0') renduQuery.rendu = false;
+        if ((req as any).query.search) renduQuery.nom = { $regex: '.*' + (req as any).query.search + '.*' };
+
         (Assignment as any).paginate(renduQuery, {
           page: parseInt((req as any).query.page) || 1,
           limit: parseInt((req as any).query.limit) || 10,
@@ -75,7 +77,7 @@ class AssignmentsRouter {
         let subjectsIds = ['606d4d56d46cb401b45695e7', "606d4e28a795b11700e3cb8d", "606d4e56a795b11700e3cb8e", "606d4e89a795b11700e3cb8f", "606d4eada795b11700e3cb90"]
         // for (let index = 0; index < 550; index++) {
         //   let rendu = [true, false][Math.floor(Math.random() * 2)]
-          
+
         //   let assignment = await Assignment.create({
         //     dateDeRendu: faker.date.between('2021-03-01', '2021-06-01'),
         //     nom: faker.lorem.word(),
