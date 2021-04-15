@@ -69,12 +69,14 @@ class AssignmentsRouter {
     this.router.get(
       '/data',
       async (req: Request, res: Response, next: NextFunction) => {
-        let items = []
-        // STUDENTS
-        let students = await User.find({ role: 'etudiant' })
+        // await Assignment.updateMany({rendu: false}, {dateDeRendu: null})
 
-        // ASSIGNMENTS
-        let subjectsIds = ['606d4d56d46cb401b45695e7', "606d4e28a795b11700e3cb8d", "606d4e56a795b11700e3cb8e", "606d4e89a795b11700e3cb8f", "606d4eada795b11700e3cb90"]
+        // let items = []
+        // // STUDENTS
+        // let students = await User.find({ role: 'etudiant' })
+
+        // // ASSIGNMENTS
+        // let subjectsIds = ['606d4d56d46cb401b45695e7', "606d4e28a795b11700e3cb8d", "606d4e56a795b11700e3cb8e", "606d4e89a795b11700e3cb8f", "606d4eada795b11700e3cb90"]
         // for (let index = 0; index < 550; index++) {
         //   let rendu = [true, false][Math.floor(Math.random() * 2)]
 
