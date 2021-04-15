@@ -137,11 +137,11 @@ class AssignmentsRouter {
       this.getAssignment,
       async (req: Request, res: any, next: NextFunction) => {
 
-        console.log("UPDATE recu assignment : ");
-        console.log(req.body);
+        console.log("UPDATE recu assignment : ", res.assignment._id);
 
         try {
           const updatedUser = await Assignment.findOneAndUpdate({ _id: res.assignment._id }, req.body);
+          console.log("updatedUser", updatedUser);
           res.json(updatedUser);
         } catch (err) {
           res.status(400).json({ message: err.message });
