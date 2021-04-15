@@ -46,6 +46,7 @@ class AssignmentsRouter {
     this.router.get(
       '/',
       auth.protect,
+      auth.authorize("prof"),
       async (req: Request, res: Response, next: NextFunction) => {
 
         let renduQuery: any = {};
@@ -54,6 +55,30 @@ class AssignmentsRouter {
         if ((req as any).query.search) renduQuery.nom = { $regex: '.*' + (req as any).query.search + '.*' };
 
         (Assignment as any).paginate(renduQuery, {
+          page: parseInt((req as any).query.page) || 1,
+          limit: parseInt((req as any).query.limit) || 10,
+          populate: [
+            { path: 'matiere', model: Subject, populate: { path: 'teacher', model: User } }, { path: 'auteur', model: User }]
+        }).then(results => {
+          res.send(results);
+        }).catch(err => {
+          res.send(err);
+        })
+      }
+    )
+
+    this.router.get(
+      '/student',
+      auth.protect,
+      async (req: Request, res: Response, next: NextFunction) => {
+
+        let query: any = {};
+        if ((req as any).query.rendu == '1') query.rendu = true;
+        if ((req as any).query.rendu == '0') query.rendu = false;
+        if ((req as any).query.search) query.nom = { $regex: '.*' + (req as any).query.search + '.*' };
+        if ((req as any).user) query.auteur = (req as any).user._id;
+
+        (Assignment as any).paginate(query, {
           page: parseInt((req as any).query.page) || 1,
           limit: parseInt((req as any).query.limit) || 10,
           populate: [
