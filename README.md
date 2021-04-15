@@ -12,23 +12,19 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 Projet Angular et Node MBDS Madagascar 2021
 
 ### Développeurs
-
-Voici les développeurs: 
-	* ANDRIAMANALINA Ranto Herizo N°02
-	* RATSIMBAZAFY Andry Patrick N°52
+	- ANDRIAMANALINA Ranto Herizo N°02
+	- RATSIMBAZAFY Andry Patrick N°52
 
 ## Lien Github:
-	- Backend: https://github.com/rantohr/MBDS_Madagascar2021_assignments_API_02_52
-	- Frontend: https://github.com/rantohr/MBDS_Madagascar2021_assignments_02_52
+1. Backend: [https://github.com/rantohr/MBDS_Madagascar2021_assignments_API_02_52](https://github.com/rantohr/MBDS_Madagascar2021_assignments_API_02_52)
+2. Frontend: [https://github.com/rantohr/MBDS_Madagascar2021_assignments_02_52](https://github.com/rantohr/MBDS_Madagascar2021_assignments_02_52)
 	
 ## Lien Heroku:
-	- Backend: https://mbds-mada2021-assignment-api.herokuapp.com/
-	- Frontend: https://mbds-madagascar2021-assignment.herokuapp.com/
+1. Backend: [https://mbds-mada2021-assignment-api.herokuapp.com/](https://mbds-mada2021-assignment-api.herokuapp.com/)
+2. Frontend: [https://mbds-madagascar2021-assignment.herokuapp.com/](https://mbds-madagascar2021-assignment.herokuapp.com/)
 	
 ## Données:
 	- 550 assignments
